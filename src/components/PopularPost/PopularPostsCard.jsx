@@ -6,11 +6,12 @@ import {
   Flex,
   Image,
   Stack,
+  Tag,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-function PopularPostsCard({ image, title, datePosted, description }) {
+function PopularPostsCard({ image, title, datePosted, description, topic }) {
   return (
     <Flex
       direction={{ base: "column", md: "row" }}
@@ -22,7 +23,14 @@ function PopularPostsCard({ image, title, datePosted, description }) {
       mx="auto"
       my="4"
     >
-      <Box flexShrink="0" width={{ base: "100%", md: "40%" }}>
+      <Box
+        flexShrink="0"
+        position={"relative"}
+        width={{ base: "100%", md: "40%" }}
+      >
+        <Tag position={"absolute"} top={"2"} left={2}>
+          {topic}
+        </Tag>
         <Image
           src={image} // Replace with your image URL
           alt="Post Image"
