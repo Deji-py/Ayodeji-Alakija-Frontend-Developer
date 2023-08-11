@@ -1,4 +1,6 @@
 import React from "react";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -11,7 +13,14 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-function PopularPostsCard({ image, title, datePosted, description, topic }) {
+function PopularPostsCard({
+  image,
+  title,
+  datePosted,
+  description,
+  topic,
+  slug,
+}) {
   return (
     <Flex
       direction={{ base: "column", md: "row" }}
@@ -49,12 +58,14 @@ function PopularPostsCard({ image, title, datePosted, description, topic }) {
           {title}
         </Text>
         <Text fontSize="sm" color="gray.500">
-          {datePosted}
+          {moment(datePosted).format("LLL")}
         </Text>
         <Text fontSize="md">{description}</Text>
-        <Button colorScheme="red" size="md">
-          Read More
-        </Button>
+        <a href={"post/" + slug}>
+          <Button colorScheme="red" size="md">
+            Read More
+          </Button>
+        </a>
       </Stack>
     </Flex>
   );

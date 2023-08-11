@@ -15,7 +15,7 @@ function EverPostCardSmall({ title, date }) {
     <Flex
       gap={2}
       align={"center"}
-      width={{ md: "500px", base: "100%" }}
+      width={{ md: "100%", base: "100%" }}
       justifyContent={"start"}
       bg={"whitesmoke"}
       borderRadius={10}
