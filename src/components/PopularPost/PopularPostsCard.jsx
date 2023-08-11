@@ -61,11 +61,11 @@ function PopularPostsCard({
           {moment(datePosted).format("LLL")}
         </Text>
         <Text fontSize="md">{description}</Text>
-        <a href={"post/" + slug}>
+        <Link to={"post/" + slug}>
           <Button colorScheme="red" size="md">
             Read More
           </Button>
-        </a>
+        </Link>
       </Stack>
     </Flex>
   );
