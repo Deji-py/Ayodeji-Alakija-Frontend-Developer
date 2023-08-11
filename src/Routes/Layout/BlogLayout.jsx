@@ -1,19 +1,10 @@
 import "react-placeholder/lib/reactPlaceholder.css";
-import React, { useEffect, useState } from "react";
-import ReactPlaceholder from "react-placeholder";
 import formatArticleBody from "../../Services/FormatArticleBody";
 import moment from "moment";
-import { Box, Image, Text } from "@chakra-ui/react";
-import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
+import { Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { client } from "../../../sanity";
-
-const awesomePlaceholder = (
-  <div className="my-awesome-placeholder">
-    <RectShape color="gray" style={{ width: "100%", height: "200px" }} />
-    <TextBlock rows={7} color="gray" />
-  </div>
-);
 
 function BlogLayout() {
   const { slug } = useParams();
@@ -46,14 +37,7 @@ function BlogLayout() {
   }, [slug]);
 
   if (!post) {
-    return (
-      <ReactPlaceholder
-        type="media"
-        rows={7}
-        ready={false}
-        customPlaceholder={awesomePlaceholder}
-      ></ReactPlaceholder>
-    );
+    return <h2>Loading</h2>;
   }
 
   return (
