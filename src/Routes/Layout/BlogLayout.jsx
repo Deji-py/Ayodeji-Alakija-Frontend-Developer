@@ -1,4 +1,3 @@
-import "react-placeholder/lib/reactPlaceholder.css";
 import formatArticleBody from "../../Services/FormatArticleBody";
 import moment from "moment";
 import { Text } from "@chakra-ui/react";
