@@ -38,7 +38,6 @@ function Home() {
 
   return (
     <Flex direction={"column"} gap={4} marginBottom={50}>
-      <FancySearchInput />
       <MainSection />
       <Center>
         <Flex px={2} direction={{ base: "column", md: "row" }} gap={4}>

@@ -12,6 +12,7 @@ function PopularPosts({ data }) {
         <>
           {data.map((item) => (
             <PopularPostsCard
+              key={item._id}
               datePosted={item.publishedAt}
               topic={item.category.name}
               title={item.title}

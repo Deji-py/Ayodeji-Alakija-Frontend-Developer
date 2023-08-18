@@ -8,6 +8,7 @@ import LifeStyle from "./Routes/Lifestyle/Lifestyle";
 import Money from "./Routes/Money/Money";
 import News from "./Routes/News/News";
 import Relationship from "./Routes/Relationship/Relationship";
+import ScrollToTop from "./components/ScrollToTop.js";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -16,6 +17,7 @@ function App() {
     <ChakraProvider>
       <Router>
         <EverHeader />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/health" element={<Health />} />
