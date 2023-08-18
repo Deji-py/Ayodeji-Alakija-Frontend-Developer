@@ -1,8 +1,12 @@
+import ContentPlaceholder from "../../Placeholders/ContentPlaceholder";
 import PopularPostsCard from "../PopularPostsCard";
 import React from "react";
 import { Text, VStack } from "@chakra-ui/react";
 
 function PopularPosts({ data }) {
+  if (!data) {
+    return <ContentPlaceholder />;
+  }
   return (
     <VStack>
       <Text fontSize={"2xl"} color={"red"} fontWeight={"bold"}>
@@ -10,7 +14,7 @@ function PopularPosts({ data }) {
       </Text>
       {data && (
         <>
-          {data.map((item) => (
+          {data.reverse().map((item) => (
             <PopularPostsCard
               key={item._id}
               datePosted={item.publishedAt}

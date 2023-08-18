@@ -21,6 +21,7 @@
     "newsapi": "^2.4.1",
     "qs": "^6.9.4",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2"
   },

@@ -1,3 +1,4 @@
+import ContentPlaceholder from "../../components/Placeholders/ContentPlaceholder";
 import formatArticleBody from "../../Services/FormatArticleBody";
 import moment from "moment";
 import { Text } from "@chakra-ui/react";
@@ -36,7 +37,11 @@ function BlogLayout() {
   }, [slug]);
 
   if (!post) {
-    return <h2>Loading</h2>;
+    return (
+      <div style={{ height: "100vh" }}>
+        <ContentPlaceholder />
+      </div>
+    );
   }
 
   return (
@@ -47,14 +52,14 @@ function BlogLayout() {
       }}
     >
       <Text fontSize={25} fontWeight={"bold"}>
-        {post.title}
+        {post?.title}
       </Text>
       <p
         style={{ margin: "10px 0px 10px 0px", color: "gray", fontSize: "14px" }}
       >
-        {moment(post.publishedAt).format("LLL")}
+        {moment(post?.publishedAt).format("LLL")}
       </p>
-      <img src={post.image.asset.url} alt={post.title} />
+      <img src={post?.image.asset.url} alt={post?.title} />
       <div style={{ marginTop: "10px" }} />
       {formatArticleBody(post?.body)}
     </div>
