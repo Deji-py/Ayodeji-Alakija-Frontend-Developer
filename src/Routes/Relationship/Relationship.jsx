@@ -1,44 +1,56 @@
 import BlogHero from "../../components/BlogHero/BlogHero";
-import PopularPostsCard from "../../components/PopularPost/PopularPostsCard";
-import { Box, Button, Center, Heading, SimpleGrid } from "@chakra-ui/react";
-import { useState } from "react";
+import PopularPosts from "../../components/PopularPost/PopularPosts/PopularPosts";
+import { Box, Center, Flex } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { client } from "../../../sanity";
 
 function Relationship() {
-  const [posts, setPosts] = useState([]); // Replace with your array of posts
-  const [visiblePosts, setVisiblePosts] = useState(6);
+  const [data, setData] = useState();
 
-  const loadMorePosts = () => {
-    setVisiblePosts(visiblePosts + 6);
-  };
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "post"]{
+          _id,
+          title,
+          slug,
+          category->{_id, name},
+          publishedAt,
+          author,
+          image {
+            asset -> {
+              url
+            }
+          },
+          body,
+        }`
+      )
+      .then((posts) => {
+        let news = posts.filter((post) => {
+          return post.category.name === "Relationship";
+        });
+        setData(news);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <Box>
       <BlogHero
         bgUri={
-          "https://img.freepik.com/free-photo/charming-joyful-caring-young-african-american-family-man-woman-siblings-smiling-broadly-show-heart-gestures-grinning-express-love-empathy-positivity-two-loyal-friends-cherish-friendship_1258-81676.jpg?w=740&t=st=1691678449~exp=1691679049~hmac=236e31f6bd6b90b92c26a6e8c814af17127dfad1338b5d66703f51efd6da3d04"
+          "https://img.freepik.com/free-photo/romantic-black-couple-sitting-restaurant-wearing-elegant-clothes_1157-51941.jpg?w=740&t=st=1692627529~exp=1692628129~hmac=7518be943b7caff7e8348a82876f4ebb913f9cc1afd3d9d1bae8ab8c16cbb17a"
         }
         title={"Relationship"}
       />
-      <Box px={[4, 8, 12]} py={8}>
-        <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-          {/* {posts.slice(0, visiblePosts).map((post) => (
-            <PopularPostsCard key={post.id} post={post} />
-          ))} */}
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-        </SimpleGrid>
-        {visiblePosts < posts.length && (
-          <Center mt={8}>
-            <Button onClick={loadMorePosts} colorScheme="teal">
-              Load More
-            </Button>
-          </Center>
-        )}
-      </Box>
+      <Center>
+        <Flex px={2} direction={{ base: "column", md: "row" }} gap={4}>
+          <Box flex={1} mt={4}>
+            <PopularPosts data={data} />
+          </Box>
+        </Flex>
+      </Center>
     </Box>
   );
 }

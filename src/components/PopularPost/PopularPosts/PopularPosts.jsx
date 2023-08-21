@@ -4,14 +4,13 @@ import React from "react";
 import { Text, VStack } from "@chakra-ui/react";
 
 function PopularPosts({ data }) {
+  console.log(data);
   if (!data) {
     return <ContentPlaceholder />;
   }
+
   return (
     <VStack>
-      <Text fontSize={"2xl"} color={"red"} fontWeight={"bold"}>
-        Popular Posts
-      </Text>
       {data && (
         <>
           {data.reverse().map((item) => (

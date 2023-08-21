@@ -1,15 +1,40 @@
 import BlogHero from "../../components/BlogHero/BlogHero";
-import PopularPostsCard from "../../components/PopularPost/PopularPostsCard";
-import { Box, Button, Center, Heading, SimpleGrid } from "@chakra-ui/react";
-import { useState } from "react";
+import PopularPosts from "../../components/PopularPost/PopularPosts/PopularPosts";
+import { Box, Center, Flex } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { client } from "../../../sanity";
 
 function Health() {
-  const [posts, setPosts] = useState([]); // Replace with your array of posts
-  const [visiblePosts, setVisiblePosts] = useState(6);
+  const [data, setData] = useState();
 
-  const loadMorePosts = () => {
-    setVisiblePosts(visiblePosts + 6);
-  };
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "post"]{
+          _id,
+          title,
+          slug,
+          category->{_id, name},
+          publishedAt,
+          author,
+          image {
+            asset -> {
+              url
+            }
+          },
+          body,
+        }`
+      )
+      .then((posts) => {
+        let news = posts.filter((post) => {
+          return post.category.name === "Health";
+        });
+        setData(news);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <Box>
@@ -19,26 +44,13 @@ function Health() {
         }
         title={"Health"}
       />
-      <Box px={[4, 8, 12]} py={8}>
-        <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-          {/* {posts.slice(0, visiblePosts).map((post) => (
-            <PopularPostsCard key={post.id} post={post} />
-          ))} */}
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-          <PopularPostsCard />
-        </SimpleGrid>
-        {visiblePosts < posts.length && (
-          <Center mt={8}>
-            <Button onClick={loadMorePosts} colorScheme="teal">
-              Load More
-            </Button>
-          </Center>
-        )}
-      </Box>
+      <Center>
+        <Flex px={2} direction={{ base: "column", md: "row" }} gap={4}>
+          <Box flex={1} mt={4}>
+            <PopularPosts data={data} />
+          </Box>
+        </Flex>
+      </Center>
     </Box>
   );
 }

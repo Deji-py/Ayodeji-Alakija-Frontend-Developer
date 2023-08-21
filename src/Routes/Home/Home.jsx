@@ -3,7 +3,7 @@ import MainSection from "../../components/MainSection/MainSection";
 import PopularCategory from "../../components/EverPostCard/PopularCategory";
 import PopularPosts from "../../components/PopularPost/PopularPosts/PopularPosts";
 import getImageUrlFromSanity from "../../Services/getSanityImage";
-import { Box, Center, Flex, VStack } from "@chakra-ui/react";
+import { Box, Center, Flex, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { client } from "../../../sanity";
 
@@ -29,7 +29,6 @@ function Home() {
       )
       .then((posts) => {
         setData(posts);
-        console.log(posts);
       })
       .catch((e) => {
         console.log(e);
@@ -39,6 +38,11 @@ function Home() {
   return (
     <Flex direction={"column"} gap={4} marginBottom={50}>
       <MainSection />
+      <Center>
+        <Text fontSize={"2xl"} color={"red"} fontWeight={"bold"}>
+          Popular Posts
+        </Text>
+      </Center>
       <Center>
         <Flex px={2} direction={{ base: "column", md: "row" }} gap={4}>
           <Box flex={1} mt={4}>
