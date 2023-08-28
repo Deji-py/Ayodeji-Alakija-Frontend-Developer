@@ -26,7 +26,7 @@ export function CapsulesCard({ capsule, setSelectedItem, setModalOpen }) {
 
         {/* Display capsule details */}
         <p className="text-gray-600">
-          {capsule?.last_update.slice(0, 20) + "..."}
+          {capsule?.last_update?.slice(0, 20) + "..."}
         </p>
       </div>
     </div>
