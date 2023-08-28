@@ -21,11 +21,11 @@ The updates include the addition of a search feature, improved UI/UX with a fixe
 - Fixes #123 (Replace with actual issue numbers and descriptions)
 
 ## Checklist
-- [ ] Tested the new features and functionality.
-- [ ] Verified backward compatibility with existing code.
-- [ ] Conducted a code review and addressed any code quality issues.
-- [ ] Updated documentation to reflect the latest changes.
-- [ ] Ensured the application maintains or improves its overall performance.
+- [x] Tested the new features and functionality.
+- [x] Verified backward compatibility with existing code.
+- [x] Conducted a code review and addressed any code quality issues.
+- [x] Updated documentation to reflect the latest changes.
+- [x] Ensured the application maintains or improves its overall performance.
 
 ## Additional Notes
 (Include any additional details or notes if necessary)
