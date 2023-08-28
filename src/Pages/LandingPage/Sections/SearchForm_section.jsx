@@ -1,5 +1,5 @@
 import useFetch from "../../../Hooks/useFetch";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { SpaceXContext } from "../../../context/SpaceXData";
 
@@ -13,15 +13,7 @@ function SearchFormSection() {
 
   useEffect(() => {
     // Handle data, loading, and error states here
-
-    if (loading) {
-      console.log("Loading SpaceX data...");
-    }
-    if (error) {
-      console.error("Error fetching SpaceX data:", error);
-    }
     if (data) {
-      console.log(data);
       if (selectedFilter === "All") {
         const filteredData = data.filter((item) =>
           Object.values(item).some(
@@ -50,7 +42,9 @@ function SearchFormSection() {
   };
 
   return (
-    <section className="w-full px-5 h-[100px] flex flex-col justify-center items-center">
+    <section
+      className={`w-full px-5 h-[100px] flex flex-col justify-center items-center`}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

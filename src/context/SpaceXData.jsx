@@ -6,7 +6,7 @@ export const SpaceXContext = createContext({
 });
 
 function SpaceXDataProvider({ children }) {
-  const [spaceXData, setSpaceXData] = useState([]);
+  const [spaceXData, setSpaceXData] = useState(null);
 
   const value = {
     setSpaceXData,
