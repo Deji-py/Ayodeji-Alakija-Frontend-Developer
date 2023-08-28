@@ -1,43 +1,62 @@
-import SuggestedCategories from "../../../components/Suggested Categories/SuggestedCategories";
-import useFetch from "../../../Hooks/useFetch";
-import { useEffect } from "react";
-
-const ItemCard = () => {
-  return (
-    <div className="w-full h-full bg-gray-400">
-      <div>Main content</div>
-      <div>Footer</div>
-    </div>
-  );
-};
+import DetailModal from "../../../components/DetailModal/DetailModal";
+import { useCallback, useContext, useState } from "react";
+import { CapsulesCard } from "../../../components/RocketCard/CapsulesCard";
+import { SpaceXContext } from "../../../context/SpaceXData";
 
 function DataGridSection() {
-  const apiUrl = "https://api.spacexdata.com/v4/rockets"; // SpaceX API endpoint
-  const { data, loading, error } = useFetch(apiUrl);
+  const { spaceXData } = useContext(SpaceXContext);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    // Handle data, loading, and error states here
-    if (loading) {
-      console.log("Loading SpaceX data...");
-    }
-    if (error) {
-      console.error("Error fetching SpaceX data:", error);
-    }
-    if (data) {
-      console.log("Fetched SpaceX data:", data);
-    }
-  }, [data, loading, error]);
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, []);
 
-  const items = [];
+  // Pagination logic
+  const capsulesPerPage = 10;
+  const indexOfLastRocket = currentPage * capsulesPerPage;
+  const indexOfFirstRocket = indexOfLastRocket - capsulesPerPage;
+  const currentRockets = spaceXData.slice(
+    indexOfFirstRocket,
+    indexOfLastRocket
+  );
+  const totalPages = Math.ceil(spaceXData.length / capsulesPerPage);
+
   return (
-    <>
-      <SuggestedCategories />
-      <section className="grid p-5 grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 h-fit gap-2">
-        {items.map((_, key) => {
-          return <ItemCard key={key} />;
-        })}
-      </section>
-    </>
+    <section className="w-full pt-5 bg-slate-100 flex flex-col justify-center items-center">
+      <div className="grid  w-full grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 h-fit gap-5 p-2">
+        {currentRockets.map((capsule, key) => (
+          <CapsulesCard
+            setSelectedItem={setSelectedItem}
+            setModalOpen={setModalOpen}
+            key={capsule.id}
+            index={key}
+            capsule={capsule}
+          />
+        ))}
+      </div>
+      <div className="my-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`px-4 py-2 mx-1 ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+      <DetailModal
+        open={modalOpen}
+        item={selectedItem}
+        handleClose={closeModal}
+      />
+    </section>
   );
 }
 

@@ -1,7 +1,5 @@
-import Button from "../../../components/Button/Button";
 import GalaxyImage from "../../../assets/images/rocket1.jpg";
 import SearchForm_section from "./SearchForm_section";
-import SuggestedCategories from "../../../components/Suggested Categories/SuggestedCategories";
 import { useEffect, useState } from "react";
 
 function Banner_Section() {
@@ -18,19 +16,17 @@ function Banner_Section() {
     };
   }, []);
 
-  const bgParallax = scrollY * 0.2;
+  const bgParallax = scrollY * 0.1;
 
   return (
     <section className="h-[500px] relative overflow-hidden flex flex-row justify-center items-center bg-gray-300">
-      <div
-        style={{
-          transform: `translateY(${bgParallax}px) `,
-        }}
-        className="w-full overflow-hidden bg-black h-full flex flex-col justify-between items-center text-white bg-gradient-to-b"
-      >
+      <div className="w-full overflow-hidden bg-black h-full flex flex-col justify-between items-center text-white bg-gradient-to-b">
         <img
           src={GalaxyImage}
           alt="galaxy-image"
+          style={{
+            transform: `translateY(${bgParallax}px) `,
+          }}
           className="opacity-[0.5] object-cover object-top w-full h-full"
         />
       </div>
@@ -38,11 +34,11 @@ function Banner_Section() {
         <div className="left w-full h-full flex flex-col justify-center items-center flex-1 ">
           <h2 className="text-4xl">Explore</h2>
           <h2 className="text-6xl">SpaceX</h2>
-          <h3 className="text-2xl">Rockets</h3>
+          <h3 className="text-2xl">Capsules</h3>
           <div className="text-center mt-5 justify-center flex flex-col items-center gap-5">
             <div>
               <p className="w-[500px] md:w-full  md:px-10 ">
-                Discover detailed information about spaceX rockets , from
+                Discover detailed information about spaceX Capsules , from
                 specifications to launch history
               </p>
             </div>

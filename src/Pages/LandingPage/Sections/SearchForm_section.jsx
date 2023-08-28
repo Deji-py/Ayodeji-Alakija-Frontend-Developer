@@ -1,58 +1,81 @@
-import React, { useContext } from "react";
-import { searchContext } from "../../../context/SearchContext";
-
-const Chip = () => {
-  return (
-    <div className="text-[12px] backdrop-blur-md px-5 rounded-full border-[0.2px] border-[rgba(255,255,255,0.2)] bg-[rgba(0,0,0,0.5)]">
-      chip
-    </div>
-  );
-};
+import useFetch from "../../../Hooks/useFetch";
+import { useContext, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { SpaceXContext } from "../../../context/SpaceXData";
 
 function SearchFormSection() {
-  const { searchTerm, setSearchTerm, search, data } = useContext(searchContext);
+  const { setSpaceXData } = useContext(SpaceXContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("All");
 
-  const handleSubmit = () => {
-    console.log("woyk");
-    search();
+  const apiUrl = `https://api.spacexdata.com/v4/capsules`; // SpaceX API endpoint with query parameter
+  const { data, loading, error } = useFetch(apiUrl);
+
+  useEffect(() => {
+    // Handle data, loading, and error states here
+
+    if (loading) {
+      console.log("Loading SpaceX data...");
+    }
+    if (error) {
+      console.error("Error fetching SpaceX data:", error);
+    }
+    if (data) {
+      console.log(data);
+      if (selectedFilter === "All") {
+        const filteredData = data.filter((item) =>
+          Object.values(item).some(
+            (value) =>
+              typeof value === "string" &&
+              value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+        setSpaceXData(filteredData);
+      } else if (selectedFilter === "launches") {
+        const filteredData = data.filter(
+          (item) => item[selectedFilter].length === Number(searchTerm)
+        );
+        setSpaceXData(filteredData);
+      } else {
+        const filteredData = data.filter((item) =>
+          item[selectedFilter].toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSpaceXData(filteredData);
+      }
+    }
+  }, [loading, setSpaceXData, selectedFilter, searchTerm, data]);
+
+  const handleFilterChange = (e) => {
+    setSelectedFilter(e.target.value);
   };
-  console.log(data);
+
   return (
-    <section className="w-fit h-[100px]   flex flex-col  justify-center items-center ">
+    <section className="w-full px-5 h-[100px] flex flex-col justify-center items-center">
       <form
-        onSubmit={(e) => e.preventDefault()}
-        className="flex w-[60vw] h-[40px]  md:w-fit    flex-row justify-center items-center"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="flex w-[60vw]  h-[40px] relative shadow-xl shadow-black md:w-full flex-row justify-center items-center"
       >
         <select
           id="filterBy"
-          className="block w-[100px]  text-[14px] bg-gray-200 text-black h-full p-2 rounded-l-md shadow-md"
+          value={selectedFilter}
+          onChange={handleFilterChange}
+          className="block w-[100px] text-[14px] bg-gray-200 text-black h-full  p-2 rounded-l-md shadow-md"
         >
-          <option value="">All</option>
-          <option value="option1">Status</option>
-          <option value="option2">Original_launch</option>
-          <option value="option3">type</option>
+          <option value="All">All</option>
+          <option value="status">Status</option>
+          <option value="launches">launches</option>
+          <option value="type">Type</option>
         </select>
         <input
-          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           type="text"
-          className="flex-1 p-2 h-full text-black shadow-md"
-          placeholder="search here..."
+          className="w-full rounded-r-md p-2 h-full text-black shadow-md"
+          placeholder="Search here..."
         />
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white p-2 px-5 rounded-r-md"
-        >
-          Q
-        </button>
+        <FaSearch className="absolute text-gray-500 right-3" />
       </form>
-
-      <div className="flex translate-y-[10px] flex-row py-2 justify-center items-center gap-5">
-        <Chip />
-        <Chip />
-        <Chip />
-        <Chip />
-      </div>
     </section>
   );
 }

@@ -1,16 +1,16 @@
 import LandingPage from "./Pages/LandingPage/LandingPage";
-import SearchProvider from "./context/SearchContext";
+import SpaceXDataProvider from "./context/SpaceXData";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <SearchProvider>
+    <SpaceXDataProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
         </Routes>
       </Router>
-    </SearchProvider>
+    </SpaceXDataProvider>
   );
 }
 
