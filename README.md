@@ -10,8 +10,11 @@ The updates include the addition of a search feature, improved UI/UX with a fixe
 - Reviewed and optimized code for performance and readability.
 
 ## Screenshots
-(Attach relevant screenshots demonstrating the changes)
-
+[screenshot 1](https://drive.google.com/file/d/1tAWd-czBNK3NI96gfaggZgidZ3gVLEhV/view?usp=drivesdk)<br>
+[screenshot 2](https://drive.google.com/file/d/1tDzaM0u-1cyp5xRZ69g5yxkh0T-oBEvI/view?usp=drivesdk)<br>
+[screenshot 3](https://drive.google.com/file/d/1t9Gk9XAyCZYBzdspnys1rdY9j4suxBwY/view?usp=drivesdk)
+## Video preview
+[preview](https://drive.google.com/file/d/1tFCZ1LnnSMBRbcqD6DspLkjWKTlE8ZK6/view?usp=drivesdk)
 ## How to Test
 1. Clone the repository and checkout this branch.
 2. Start the development server.
